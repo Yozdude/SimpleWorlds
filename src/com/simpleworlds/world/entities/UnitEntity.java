@@ -10,6 +10,7 @@ import com.simpleworlds.utils.Vec;
 public class UnitEntity extends GameEntity {
   public UNIT_TYPE unitType;
 
+  public int life;
   public int skill;
   public int equipment;
   public int morale;

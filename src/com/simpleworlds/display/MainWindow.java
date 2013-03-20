@@ -38,6 +38,7 @@ import processing.core.PApplet;
 
 import com.simpleworlds.data.MetaData;
 import com.simpleworlds.utils.Vec;
+import com.simpleworlds.utils.WorldGenerator;
 import com.simpleworlds.world.World;
 import com.simpleworlds.world.entities.HexSpace;
 
@@ -59,8 +60,7 @@ public class MainWindow extends PApplet {
 
     MetaData.initialize(this);
 
-    world = new World();
-    world.generateRandomWorld(10, 10);
+    world = WorldGenerator.generateRandomWorld(20, 20);
 
     ellipseMode(CENTER);
   }

@@ -3,16 +3,10 @@ package com.simpleworlds.world;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.simpleworlds.data.ImagesData;
-import com.simpleworlds.data.ImagesData.RESOURCE_TYPE;
-import com.simpleworlds.data.ImagesData.STRUCTURE_TYPE;
-import com.simpleworlds.data.ImagesData.TERRAIN_TYPE;
 import com.simpleworlds.display.MainWindow;
 import com.simpleworlds.utils.Vec;
 import com.simpleworlds.world.entities.HexSpace;
 import com.simpleworlds.world.entities.Nation;
-import com.simpleworlds.world.entities.ResourceEntity;
-import com.simpleworlds.world.entities.StructureEntity;
 
 public class World {
   public HexSpace hexes[][];
@@ -21,28 +15,6 @@ public class World {
 
   public World() {
     nations = new ArrayList<Nation>();
-  }
-
-  public void generateRandomWorld(int width, int height) {
-    hexes = new HexSpace[width][height];
-    for (int i=0; i<width; i++) {
-      for (int j=0; j<height; j++) {
-        hexes[i][j] = new HexSpace(MainWindow.gridToWorld(new Vec(i, j)), TERRAIN_TYPE.values()[1 + (int)(Math.random()*(ImagesData.TERRAIN_IMAGE.length-1))]);
-        if (Math.random() >= 0.7) {
-          hexes[i][j].resource = new ResourceEntity(RESOURCE_TYPE.values()[(int)(Math.random()*ImagesData.RESOURCE_IMAGE.length)]);
-        }
-      }
-    }
-
-    Vec start = new Vec((int)Math.floor(Math.random() * hexes.length), (int)Math.floor(Math.random() * hexes[0].length));
-    getHex(start.x, start.y).structure = new StructureEntity(STRUCTURE_TYPE.TOWN);
-    for (HexSpace hex : getNeighbors(start)) {
-      hex.visible = true;
-    }
-
-    for (int i=0; i<3; i++) {
-      nations.add(new Nation());
-    }
   }
 
   public void draw() {
