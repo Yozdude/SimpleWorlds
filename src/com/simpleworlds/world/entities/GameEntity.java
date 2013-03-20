@@ -11,5 +11,5 @@ public abstract class GameEntity {
 
   public abstract void drawAtScreenPos(Vec screen);
 
-  public abstract List<EntityAction> getEntityActions();
+  public abstract List<EntityAction> getEntityActions(HexSpace hex);
 }

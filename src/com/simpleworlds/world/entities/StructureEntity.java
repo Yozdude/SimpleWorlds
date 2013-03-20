@@ -22,7 +22,7 @@ public class StructureEntity extends GameEntity {
     ImagesData.drawAt(structureType, screen);
   }
 
-  public List<EntityAction> getEntityActions() {
+  public List<EntityAction> getEntityActions(HexSpace hex) {
     ArrayList<EntityAction> actions = new ArrayList<EntityAction>();
 
     return actions;

@@ -36,6 +36,7 @@ package com.simpleworlds.display;
 
 import processing.core.PApplet;
 
+import com.simpleworlds.data.ImagesData;
 import com.simpleworlds.data.MetaData;
 import com.simpleworlds.utils.Vec;
 import com.simpleworlds.utils.WorldGenerator;
@@ -50,6 +51,8 @@ public class MainWindow extends PApplet {
   World world;
 
   Vec selected = null;
+
+  ActionPopupBox actionPopup;
 
   public static void main(String args[]) {
     PApplet.main(new String[] { "--present", "com.simpleworlds.display.MainWindow" });
@@ -71,11 +74,12 @@ public class MainWindow extends PApplet {
     world.draw();
 
     if (selected != null) {
-      strokeWeight(3);
-      stroke(color(255, 255, 0));
-      noFill();
       Vec world = worldToScreen(gridToWorld(selected));
-      ellipse(world.x + HexSpace.R, world.y + HexSpace.R, 1.7f * HexSpace.R, 1.7f * HexSpace.R);
+      image(ImagesData.selectedImage, world.x, world.y);
+    }
+
+    if (actionPopup != null) {
+      actionPopup.draw();
     }
   }
 
@@ -85,9 +89,15 @@ public class MainWindow extends PApplet {
 
   public void mousePressed() {
     if (mouseButton == LEFT) {
-      selected = worldToGrid(screenToWorld(new Vec(mouseX, mouseY)));
-    } else if (mouseButton == RIGHT) {
+      if (actionPopup != null && actionPopup.pointInPopup(mouseX, mouseY)) {
 
+      } else {
+        selected = worldToGrid(screenToWorld(new Vec(mouseX, mouseY)));
+        actionPopup = null;
+      }
+    } else if (mouseButton == RIGHT) {
+      selected = worldToGrid(screenToWorld(new Vec(mouseX, mouseY)));
+      actionPopup = new ActionPopupBox(gridToWorld(selected), world.getHex(selected.x, selected.y).getHexActions());
     } else if (mouseButton == CENTER) {
       screenOffset.addLocal(mouseX - pmouseX, mouseY - pmouseY);
     }

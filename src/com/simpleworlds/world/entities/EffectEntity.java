@@ -18,7 +18,7 @@ public class EffectEntity extends GameEntity {
     ImagesData.drawAt(effectType, screen);
   }
 
-  public List<EntityAction> getEntityActions() {
+  public List<EntityAction> getEntityActions(HexSpace hex) {
     ArrayList<EntityAction> actions = new ArrayList<EntityAction>();
 
     return actions;

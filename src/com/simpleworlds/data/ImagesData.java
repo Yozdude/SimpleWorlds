@@ -24,6 +24,11 @@ public class ImagesData {
   public static enum EFFECT_TYPE {VORTEX};
   public static PImage EFFECT_IMAGE[] = new PImage[EFFECT_TYPE.values().length];
 
+  public static enum ACTION_TYPE {EXPLORE};
+  public static PImage ACTION_IMAGE[] = new PImage[ACTION_TYPE.values().length];
+
+  public static PImage selectedImage;
+
   public static void initialize() {
     /*
     for (int i=0; i<TERRAIN_TYPE.values().length; i++) {
@@ -157,6 +162,44 @@ public class ImagesData {
       g.endDraw();
       EFFECT_IMAGE[i] = g.get();
     }
+
+    for (int i=0; i<EFFECT_TYPE.values().length; i++) {
+      PGraphics g = MetaData.mainWindow.createGraphics(HexSpace.R * 2, HexSpace.R * 2, PApplet.OPENGL);
+      g.beginDraw();
+      g.background(g.color(255, 0));
+      g.stroke(g.color(255));
+      g.strokeWeight(2);
+      g.ellipseMode(PApplet.CENTER);
+      if (i == 0) {
+          g.fill(g.color(100, 100, 255));
+      }
+      g.ellipse(HexSpace.R, HexSpace.R, HexSpace.R, HexSpace.R);
+      g.endDraw();
+      EFFECT_IMAGE[i] = g.get();
+    }
+
+    for (int i=0; i<ACTION_TYPE.values().length; i++) {
+      PGraphics g = MetaData.mainWindow.createGraphics(HexSpace.R * 2, HexSpace.R * 2, PApplet.OPENGL);
+      g.beginDraw();
+      g.background(g.color(255, 0));
+      g.stroke(g.color(255));
+      g.strokeWeight(2);
+      g.ellipseMode(PApplet.CENTER);
+      g.fill(10 * i);
+      g.ellipse(HexSpace.R, HexSpace.R, 2 * HexSpace.R, 2 * HexSpace.R);
+      g.endDraw();
+      ACTION_IMAGE[i] = g.get();
+    }
+
+    PGraphics g = MetaData.mainWindow.createGraphics(2 * HexSpace.R, 2 * HexSpace.R, PApplet.OPENGL);
+    g.beginDraw();
+    g.background(g.color(255, 0));
+    g.strokeWeight(3);
+    g.stroke(g.color(255, 255, 0));
+    g.noFill();
+    g.ellipse(HexSpace.R,HexSpace.R, 1.7f * HexSpace.R, 1.7f * HexSpace.R);
+    g.endDraw();
+    selectedImage = g.get();
   }
 
   // Terrain
@@ -202,5 +245,14 @@ public class ImagesData {
 
   public static void drawAt(EFFECT_TYPE type, Vec screenPos) {
     ImagesData.drawEffectAt(type, screenPos);
+  }
+
+  // Actions
+  public static void drawActionAt(ACTION_TYPE type, Vec screenPos) {
+    MetaData.mainWindow.image(ACTION_IMAGE[type.ordinal()], screenPos.x, screenPos.y);
+  }
+
+  public static void drawAt(ACTION_TYPE type, Vec screenPos) {
+    ImagesData.drawActionAt(type, screenPos);
   }
 }

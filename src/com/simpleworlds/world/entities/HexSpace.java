@@ -1,6 +1,10 @@
 package com.simpleworlds.world.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.simpleworlds.data.ImagesData;
+import com.simpleworlds.data.ImagesData.ACTION_TYPE;
 import com.simpleworlds.data.ImagesData.TERRAIN_TYPE;
 import com.simpleworlds.display.MainWindow;
 import com.simpleworlds.utils.Vec;
@@ -44,5 +48,25 @@ public class HexSpace implements DrawableInterface {
     } else {
       ImagesData.drawTerrainAt(TERRAIN_TYPE.UNKNOWN, screenPos);
     }
+  }
+
+  public List<EntityAction> getHexActions() {
+    ArrayList<EntityAction> actions = new ArrayList<EntityAction>();
+    if (!visible) {
+      actions.add(new EntityAction(ACTION_TYPE.EXPLORE));
+    }
+    if (resource != null) {
+      actions.addAll(resource.getEntityActions(this));
+    }
+    if (structure != null) {
+      actions.addAll(structure.getEntityActions(this));
+    }
+    if (unit != null) {
+      actions.addAll(unit.getEntityActions(this));
+    }
+    if (effect != null) {
+      actions.addAll(effect.getEntityActions(this));
+    }
+    return actions;
   }
 }

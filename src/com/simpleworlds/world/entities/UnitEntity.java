@@ -23,7 +23,7 @@ public class UnitEntity extends GameEntity {
     ImagesData.drawAt(unitType, screen);
   }
 
-  public List<EntityAction> getEntityActions() {
+  public List<EntityAction> getEntityActions(HexSpace hex) {
     ArrayList<EntityAction> actions = new ArrayList<EntityAction>();
 
     return actions;
