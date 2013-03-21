@@ -15,6 +15,10 @@ public class HexSpace implements DrawableInterface {
   public static final float S = (float)Math.floor((3.0 / 2.0) * R) * 0.65f;
   public static final float H = (float)Math.floor(Math.sqrt(3) * R) * 1.4f;
 
+  public static final int WIDTH = 56; //52;
+  public static final int HEIGHT = 36; //44;
+  public static final int X_OFFSET = 28;
+
 /*
   public static final int R = 30;
   public static final float W = 2 * R;
@@ -37,7 +41,7 @@ public class HexSpace implements DrawableInterface {
 
   public void draw() {
     Vec screenPos = MainWindow.worldToScreen(worldPos);
-    //if (visible) {
+    if (visible) {
       ImagesData.drawTerrainAt(terrainType, screenPos);
       if (resource != null) {
         resource.drawAtScreenPos(screenPos);
@@ -51,9 +55,9 @@ public class HexSpace implements DrawableInterface {
       if (effect != null) {
         effect.drawAtScreenPos(screenPos);
       }
-    //} else {
-    //  ImagesData.drawTerrainAt(TERRAIN_TYPE.UNKNOWN, screenPos);
-    //}
+    } else {
+      ImagesData.drawTerrainAt(TERRAIN_TYPE.UNKNOWN, screenPos);
+    }
   }
 
   public List<EntityAction> getHexActions() {

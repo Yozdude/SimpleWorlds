@@ -48,6 +48,7 @@ public class World {
 
   public List<HexSpace> getNeighbors(int x, int y) {
     ArrayList<HexSpace> neighbors = new ArrayList<HexSpace>();
+    /*
     if (x % 2 != 0) {
       for (int i=x-1; i<=x+1; i++) {
         for (int j=y; j<=y+1; j++) {
@@ -71,6 +72,24 @@ public class World {
         neighbors.add(getHex(x, y+1));
       }
     }
+    */
+
+    if (y % 2 == 0) {
+      if (getHex(x-1, y-1) != null) { neighbors.add(getHex(x-1, y-1)); }
+      if (getHex(x, y-1) != null) { neighbors.add(getHex(x, y-1)); }
+      if (getHex(x-1, y) != null) { neighbors.add(getHex(x-1, y)); }
+      if (getHex(x+1, y) != null) { neighbors.add(getHex(x+1, y)); }
+      if (getHex(x-1, y+1) != null) { neighbors.add(getHex(x-1, y+1)); }
+      if (getHex(x, y+1) != null) { neighbors.add(getHex(x, y+1)); }
+    } else {
+      if (getHex(x, y-1) != null) { neighbors.add(getHex(x, y-1)); }
+      if (getHex(x+1, y-1) != null) { neighbors.add(getHex(x+1, y-1)); }
+      if (getHex(x-1, y) != null) { neighbors.add(getHex(x-1, y)); }
+      if (getHex(x+1, y) != null) { neighbors.add(getHex(x+1, y)); }
+      if (getHex(x, y+1) != null) { neighbors.add(getHex(x, y+1)); }
+      if (getHex(x+1, y+1) != null) { neighbors.add(getHex(x+1, y+1)); }
+    }
+
     return neighbors;
   }
 

@@ -34,21 +34,28 @@ public class WorldGenerator {
             }
           }
         }
-        if (Math.random() >= 0.95 && !t.equals(TERRAIN_TYPE.SALTWATER) && !t.equals(TERRAIN_TYPE.FRESHWATER)) {
+        if (Math.random() >= 0.95 && !t.equals(TERRAIN_TYPE.SALTWATER) && !t.equals(TERRAIN_TYPE.FRESHWATER) &&
+            !t.equals(TERRAIN_TYPE.MOUNTAIN) && !t.equals(TERRAIN_TYPE.FOREST)) {
           world.hexes[i][j].structure = new StructureEntity(STRUCTURE_TYPE.values()[(int)(Math.random()*ImagesData.STRUCTURE_IMAGE.length)]);
         }
-        if (Math.random() >= 0.95 && !t.equals(TERRAIN_TYPE.SALTWATER) && !t.equals(TERRAIN_TYPE.FRESHWATER)) {
+        if (Math.random() >= 0.95 && !t.equals(TERRAIN_TYPE.SALTWATER) && !t.equals(TERRAIN_TYPE.FRESHWATER) &&
+            !t.equals(TERRAIN_TYPE.MOUNTAIN)) {
           world.hexes[i][j].unit = new UnitEntity(UNIT_TYPE.values()[(int)(Math.random()*ImagesData.UNIT_IMAGE.length)]);
         }
       }
     }
 
     Random random = new Random();
-    double x = width/2.0 + random.nextGaussian() * width/4.0;
-    x = Math.min(Math.max(Math.round(x), 0), width-1);
-    double y = height/2.0 + random.nextGaussian() * height/4.0;
-    y = Math.min(Math.max(Math.round(y), 0), height-1);
-    Vec start = new Vec((int)x, (int)y);
+    Vec start = new Vec(0, 0);
+    do {
+      double x = width/2.0 + random.nextGaussian() * width/4.0;
+      x = Math.min(Math.max(Math.round(x), 0), width-1);
+      double y = height/2.0 + random.nextGaussian() * height/4.0;
+      y = Math.min(Math.max(Math.round(y), 0), height-1);
+      start = new Vec((int)x, (int)y);
+    } while (!(world.getHex(start.x,  start.y).terrainType.equals(TERRAIN_TYPE.GRASSLAND) ||
+        world.getHex(start.x,  start.y).terrainType.equals(TERRAIN_TYPE.SAND)));
+    world.getHex(start.x,  start.y).visible = true;
     world.getHex(start.x, start.y).structure = new StructureEntity(STRUCTURE_TYPE.TOWN);
     for (HexSpace hex : world.getNeighbors(start)) {
       hex.visible = true;
@@ -57,6 +64,8 @@ public class WorldGenerator {
     for (int i=0; i<3; i++) {
       world.nations.add(new Nation());
     }
+
+    MainWindow.screenOffset = MainWindow.gridToWorld(new Vec(-start.x, -start.y));
 
     return world;
   }

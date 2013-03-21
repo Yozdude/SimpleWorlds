@@ -46,7 +46,7 @@ import com.simpleworlds.world.entities.HexSpace;
 public class MainWindow extends PApplet {
   private static final long serialVersionUID = 1L;
 
-  static Vec screenOffset = new Vec(0, 0);
+  public static Vec screenOffset = new Vec(0, 0);
 
   World world;
 
@@ -63,7 +63,7 @@ public class MainWindow extends PApplet {
 
     MetaData.initialize(this);
 
-    world = WorldGenerator.generateRandomWorld(80, 20);
+    world = WorldGenerator.generateRandomWorld(20, 20);
 
     imageMode(CENTER);
     ellipseMode(CENTER);
@@ -110,10 +110,13 @@ public class MainWindow extends PApplet {
   }
 
   public static Vec gridToWorld(Vec grid) {
-    return new Vec(Math.round(grid.x * HexSpace.S), Math.round(grid.y * HexSpace.H + (grid.x % 2) * (HexSpace.H / 2)));
+    //return new Vec(Math.round(grid.x * HexSpace.S), Math.round(grid.y * HexSpace.H + (grid.x % 2) * (HexSpace.H / 2)));
+    return new Vec(Math.round(grid.x * HexSpace.WIDTH + (grid.y % 2) * HexSpace.X_OFFSET),
+                   Math.round(grid.y * HexSpace.HEIGHT)); // + (grid.y % 2) * HexSpace.Y_OFFSET));
   }
 
   public static Vec worldToGrid(Vec world) {
+    /*
     int it = (int)Math.floor(world.x / HexSpace.S);
     int jt = (int)Math.floor((world.y - (it % 2) * (HexSpace.H / 2.0)) / HexSpace.H);
     int xt = Math.round(world.x - it * HexSpace.S);
@@ -131,6 +134,8 @@ public class MainWindow extends PApplet {
       j = jt;
     }
     return new Vec(i, j);
+    */
+    return new Vec(Math.round((world.x + HexSpace.WIDTH/2 - ((world.y % 2) * HexSpace.X_OFFSET)) / HexSpace.WIDTH), Math.round((world.y + HexSpace.HEIGHT/2) / HexSpace.HEIGHT));
   }
 
   public static Vec worldToScreen(Vec world) {
