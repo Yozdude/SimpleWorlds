@@ -85,6 +85,12 @@ public class MainWindow extends PApplet {
     if (actionPopup != null) {
       actionPopup.draw();
     }
+
+    Vec c = screenToWorld(new Vec(mouseX, mouseY % (2 * HexSpace.Y_OFFSET)));
+    stroke(255);
+    strokeWeight(4);
+    line(c.x-30, c.y, c.x + 30, c.y);
+    System.out.println(mouseY + " " + (((mouseY % (2 * HexSpace.Y_OFFSET)) <= HexSpace.Y_OFFSET) ? "t" : "f") + " " + HexSpace.Y_OFFSET);
   }
 
   public void mouseDragged() {
@@ -97,7 +103,6 @@ public class MainWindow extends PApplet {
 
       } else {
         selected = worldToGrid(screenToWorld(new Vec(mouseX, mouseY)));
-        System.out.println(selected);
         actionPopup = null;
       }
     } else if (mouseButton == RIGHT) {
@@ -138,7 +143,9 @@ public class MainWindow extends PApplet {
     }
     return new Vec(i, j);
     */
-    return new Vec(Math.round((world.x + HexSpace.WIDTH/2 - ((world.y % 2) * HexSpace.X_OFFSET)) / HexSpace.WIDTH), Math.round((world.y + HexSpace.HEIGHT/2) / HexSpace.HEIGHT));
+    int xOffset = (world.y % HexSpace.Y_OFFSET <= HexSpace.Y_OFFSET/2) ? 1 : 2;
+    System.out.println(xOffset);
+    return new Vec(Math.round((world.x + HexSpace.WIDTH/2) / HexSpace.WIDTH), Math.round((world.y + HexSpace.HEIGHT/2) / HexSpace.HEIGHT));
   }
 
   public static Vec worldToScreen(Vec world) {

@@ -18,6 +18,7 @@ public class HexSpace implements DrawableInterface {
   public static final int WIDTH = 56; //52;
   public static final int HEIGHT = 36; //44;
   public static final int X_OFFSET = 28;
+  public static final int Y_OFFSET = 36;
 
 /*
   public static final int R = 30;
