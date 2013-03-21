@@ -6,12 +6,14 @@ import com.simpleworlds.data.ImagesData;
 import com.simpleworlds.data.ImagesData.RESOURCE_TYPE;
 import com.simpleworlds.data.ImagesData.STRUCTURE_TYPE;
 import com.simpleworlds.data.ImagesData.TERRAIN_TYPE;
+import com.simpleworlds.data.ImagesData.UNIT_TYPE;
 import com.simpleworlds.display.MainWindow;
 import com.simpleworlds.world.World;
 import com.simpleworlds.world.entities.HexSpace;
 import com.simpleworlds.world.entities.Nation;
 import com.simpleworlds.world.entities.ResourceEntity;
 import com.simpleworlds.world.entities.StructureEntity;
+import com.simpleworlds.world.entities.UnitEntity;
 
 public class WorldGenerator {
   public static World generateRandomWorld(int width, int height) {
@@ -20,9 +22,23 @@ public class WorldGenerator {
     world.hexes = new HexSpace[width][height];
     for (int i=0; i<width; i++) {
       for (int j=0; j<height; j++) {
-        world.hexes[i][j] = new HexSpace(MainWindow.gridToWorld(new Vec(i, j)), TERRAIN_TYPE.values()[1 + (int)(Math.random()*(ImagesData.TERRAIN_IMAGE.length-1))]);
-        if (Math.random() >= 0.7) {
-          world.hexes[i][j].resource = new ResourceEntity(RESOURCE_TYPE.values()[(int)(Math.random()*ImagesData.RESOURCE_IMAGE.length)]);
+        TERRAIN_TYPE t = TERRAIN_TYPE.values()[1 + (int)(Math.random()*(ImagesData.TERRAIN_IMAGE.length-1))];
+        world.hexes[i][j] = new HexSpace(MainWindow.gridToWorld(new Vec(i, j)), t);
+        if (Math.random() >= 0.95) {
+          if (t.equals(TERRAIN_TYPE.SALTWATER) || t.equals(TERRAIN_TYPE.FRESHWATER)) {
+        	world.hexes[i][j].resource = new ResourceEntity(RESOURCE_TYPE.FISH);
+          } else {
+        	RESOURCE_TYPE rt = RESOURCE_TYPE.values()[(int)(Math.random()*ImagesData.RESOURCE_IMAGE.length)];
+        	if (!rt.equals(RESOURCE_TYPE.FISH)) {
+              world.hexes[i][j].resource = new ResourceEntity(rt);
+            }
+          }
+        }
+        if (Math.random() >= 0.95 && !t.equals(TERRAIN_TYPE.SALTWATER) && !t.equals(TERRAIN_TYPE.FRESHWATER)) {
+          world.hexes[i][j].structure = new StructureEntity(STRUCTURE_TYPE.values()[(int)(Math.random()*ImagesData.STRUCTURE_IMAGE.length)]);
+        }
+        if (Math.random() >= 0.95 && !t.equals(TERRAIN_TYPE.SALTWATER) && !t.equals(TERRAIN_TYPE.FRESHWATER)) {
+          world.hexes[i][j].unit = new UnitEntity(UNIT_TYPE.values()[(int)(Math.random()*ImagesData.UNIT_IMAGE.length)]);
         }
       }
     }

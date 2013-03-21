@@ -59,12 +59,13 @@ public class MainWindow extends PApplet {
   }
 
   public void setup() {
-    size(800, 800, OPENGL);
+    size(1024, 600, OPENGL);
 
     MetaData.initialize(this);
 
-    world = WorldGenerator.generateRandomWorld(20, 20);
+    world = WorldGenerator.generateRandomWorld(80, 20);
 
+    imageMode(CENTER);
     ellipseMode(CENTER);
   }
 
@@ -93,6 +94,7 @@ public class MainWindow extends PApplet {
 
       } else {
         selected = worldToGrid(screenToWorld(new Vec(mouseX, mouseY)));
+        System.out.println(selected);
         actionPopup = null;
       }
     } else if (mouseButton == RIGHT) {

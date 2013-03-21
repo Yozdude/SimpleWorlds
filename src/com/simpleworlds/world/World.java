@@ -19,11 +19,26 @@ public class World {
 
   public void draw() {
     if (hexes != null) {
-      for (int i=0; i<hexes.length; i++) {
+      for (int j=0; j<hexes[0].length; j++) {
+        for (int i=0; i<hexes.length; i+=2) {
+          hexes[i][j].draw();
+        }
+        for (int i=1; i<hexes.length; i+=2) {
+          hexes[i][j].draw();
+        }
+      }
+      /*
+      for (int i=0; i<hexes.length; i+=2) {
         for (int j=0; j<hexes[0].length; j++) {
           hexes[i][j].draw();
         }
       }
+      for (int i=1; i<hexes.length; i+=2) {
+        for (int j=0; j<hexes[0].length; j++) {
+          hexes[i][j].draw();
+        }
+      }
+      */
     }
   }
 
