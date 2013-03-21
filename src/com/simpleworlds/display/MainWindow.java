@@ -46,6 +46,9 @@ import com.simpleworlds.world.entities.HexSpace;
 public class MainWindow extends PApplet {
   private static final long serialVersionUID = 1L;
 
+  public static final int screenWidth = 1024;
+  public static final int screenHeight = 600;
+
   public static Vec screenOffset = new Vec(0, 0);
 
   World world;
@@ -59,7 +62,7 @@ public class MainWindow extends PApplet {
   }
 
   public void setup() {
-    size(1024, 600, OPENGL);
+    size(screenWidth, screenHeight, OPENGL);
 
     MetaData.initialize(this);
 

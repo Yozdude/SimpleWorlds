@@ -65,7 +65,7 @@ public class WorldGenerator {
       world.nations.add(new Nation());
     }
 
-    MainWindow.screenOffset = MainWindow.gridToWorld(new Vec(-start.x, -start.y));
+    MainWindow.screenOffset = MainWindow.worldToScreen(MainWindow.gridToWorld(new Vec(-start.x, -start.y))).add(MainWindow.screenWidth/2, MainWindow.screenHeight/2);
 
     return world;
   }
